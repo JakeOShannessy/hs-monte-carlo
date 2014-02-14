@@ -51,6 +51,7 @@ module Control.Monad.MC.GSLBase (
     pareto,
     weibull,
     gamma,
+    lognormal,
     multinomial,
     dirichlet,
     ) where
@@ -338,6 +339,9 @@ weibull = liftRan2 getWeibull
 
 gamma :: Double -> Double -> MC Double
 gamma = liftRan2 getGamma
+
+lognormal :: Double -> Double -> MC Double
+lognormal = liftRan2 getLognormal
 
 multinomial :: Int -> VS.Vector Double -> MC (VS.Vector Int)
 multinomial = liftRan2 getMultinomial

@@ -77,6 +77,9 @@ class (Monad m, HasRNG m) => MonadMC m where
     -- | @gamma a b@ generates a gamma random variable with
     -- parameters @a@ and @b@.
     gamma :: Double -> Double -> m Double
+    
+    -- | @lognormal zeta sigma@ generates a Log-Normal random variable with parameters @zeta@ and @sigma@.
+    lognormal :: Double -> Double -> m Double
 
     -- | @multinomial n ps@ generates a multinomial random
     -- variable with parameters @ps@ formed by @n@ trials.
@@ -132,6 +135,8 @@ instance MonadMC GSL.MC where
     {-# INLINE weibull #-}
     gamma = GSL.gamma
     {-# INLINE gamma #-}
+    lognormal = GSL.lognormal
+    {-# INLINE lognormal #-}
     multinomial = GSL.multinomial
     {-# INLINE multinomial #-}
     dirichlet = GSL.dirichlet
@@ -173,6 +178,8 @@ instance (Monad m) => MonadMC (GSL.MCT m) where
     {-# INLINE weibull #-}
     gamma a b = GSL.liftMCT $ GSL.gamma a b
     {-# INLINE gamma #-}
+    lognormal a b = GSL.liftMCT $ GSL.lognormal a b
+    {-# INLINE lognormal #-}
     multinomial n ps = GSL.liftMCT $ GSL.multinomial n ps
     {-# INLINE multinomial #-}
     dirichlet alphas = GSL.liftMCT $ GSL.dirichlet alphas
